@@ -94,7 +94,18 @@ summary(test$Petal.Width)
 
 "---------------------"
 # corellation
-(test$Sepal.Length)
-(test$Sepal.Width)
-(test$Petal.Length)
-(test$Petal.Width)
+cor(test$Sepal.Length, test$Sepal.Width)
+cor(test$Petal.Length, test$Petal.Width)
+
+# plots
+barplot(test$Sepal.Length)
+barplot(test$Sepal.Width)
+barplot(test$Petal.Length)
+barplot(test$Petal.Width)
+
+boxplot(test$Sepal.Length)
+boxplot(test$Sepal.Width)
+boxplot(test$Petal.Length)
+boxplot(test$Petal.Width)
+
+boxplot(test$Sepal.Length ~ test$Species)
