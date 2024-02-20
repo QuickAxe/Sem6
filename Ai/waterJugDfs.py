@@ -1,48 +1,77 @@
-# jug 1 capacity = x
-# jug 2 capacity = y
+# jug 1 capacity = jug1
+# jug 2 capacity = jug2
+
+print("Enter jug 1 capacity:")
+
+jug1 = int(input())
+jug2 = int(input("Enter jug 2 capacity: "))
+
+goal = int(input("Enter goal state: "))
+
+goalSet = []
+
+for i in range(jug1 + 1):
+    goalSet.append((i, goal))
+
+for j in range(jug2 + 1):
+    goalSet.append((goal, j))
+
 
 path = []
 visited = []
-goalSet = []
 
 # storing start state
-path[0] = (0, 0, "start")
+# path.append((0, 0, "start"))
+
+state = 0
 
 
-#! not done
-def jugsDfs(currentState):
+def jugsDfs(currentState, state):
+
     jug1, jug2, _ = currentState
 
-    if tuple[:2] in goalSet:
-        path = []
-        while tuple in Parent and Parent[tuple] is not None:
-            path.append(tuple)
-            tuple = Parent[tuple]
-        path.append(START)
-        path.reverse()
+    if (jug1, jug2) in visited:
+        return
+    global path
+    path.append(currentState)
+
+    visited.append((jug1, jug2))
+
+    # if goal reached:
+    if (jug1, jug2) in goalSet:
         print(*path, sep="\n")
-        sys.exit()
-    if jug1 < 4:
-        tup = (4, jug2, "Filled 4g")
-        DFSAdd(tuple, tup, goalSet)
-    if jug2 < 3:
-        tup = (jug1, 3, "Filled 3g")
-        DFSAdd(tuple, tup, goalSet)
+        print("reached goal state! \n")
+        return
+
     if jug1 > 0:
-        tup = (0, jug2, "Emptied 4g")
-        DFSAdd(tuple, tup, goalSet)
+        jugsDfs((0, jug2, "Emptying X"), state + 1)
+
     if jug2 > 0:
-        tup = (jug1, 0, "Emptied 3g")
-        DFSAdd(tuple, tup, goalSet)
-    if jug1 + jug2 < 7 and 4 - jug1 < jug2:
-        tup = (4, jug2 - (4 - jug1), "Transferred 3g to 4g with some remaining")
-        DFSAdd(tuple, tup, goalSet)
-    if jug1 + jug2 < 7 and 3 - jug2 < jug1:
-        tup = (jug1 - (3 - jug2), 3, "Transferred 4g to 3g with some remaining")
-        DFSAdd(tuple, tup, goalSet)
-    if jug1 + jug2 < 4:
-        tup = (jug1 + jug2, 0, "Entirely transferred 3g to 4g")
-        DFSAdd(tuple, tup, goalSet)
-    if jug1 + jug2 < 3:
-        tup = (0, jug1 + jug2, "Entirely transferred 4g to 3g")
-        DFSAdd(tuple, tup, goalSet)
+        jugsDfs((jug1, 0, "Emptying Y"), state + 1)
+
+    if jug1 < 4:
+        jugsDfs((4, jug2, "Filling X"), state + 1)
+
+    if jug2 < 3:
+        jugsDfs((jug1, 3, "Filling Y"), state + 1)
+
+    if jug1 > 0 and jug2 < 3:
+
+        if jug1 + jug2 <= 3:
+            jugsDfs((0, jug1 + jug2, "Pouring from X to Y"), state + 1)
+
+        else:
+            jugsDfs((jug1 - (3 - jug2), 3, "Pouring from X to Y"), state + 1)
+
+    if jug1 < 4 and jug2 > 0:
+
+        if jug1 + jug2 <= 4:
+            jugsDfs((jug1 + jug2, 0, "Pouring from Y to X"), state + 1)
+
+        else:
+            jugsDfs((4, jug2 - (4 - jug1), "Pouring from Y to X"), state + 1)
+
+    path.pop(-1)
+
+
+jugsDfs((0, 0, "Start"), state)

@@ -15,12 +15,13 @@ def DFSAdd(tuple, tup, GOAL_SET):
 
 
 def Rules(tuple, GOAL_SET):
-    jug1, jug2,_ = tuple
+    jug1, jug2, _ = tuple
     if tuple[:2] in GOAL_SET:
         path = []
-        while tuple in Parent and Parent[tuple] is not None:
+        tup_ = tuple
+        while tup_ in Parent and Parent[tup_] is not None:
             path.append(tuple)
-            tuple = Parent[tuple]
+            tup_ = Parent[tup_]
         path.append(START)
         path.reverse()
         print(*path, sep="\n")
