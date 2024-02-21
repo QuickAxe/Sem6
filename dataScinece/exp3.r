@@ -30,4 +30,6 @@ names(s) <- c("rollNo", "name", "age", "class")
 sample2 = read.csv("./sample.csv")
 w1 <- rbind(sample2, s)
 
-w1
+barplot(lung$LungCap)
+
+boxplot(lung$LungCap)
