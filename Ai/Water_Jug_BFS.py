@@ -1,4 +1,3 @@
-import sys
 from queue import Queue
 
 START = (0, 0, "Start")
@@ -8,84 +7,99 @@ Parent = {}
 Parent[START] = None
 
 
-def BFSPath(tuple, tup):
-        Parent[tup] = tuple
+def BFSPath(tuple, tup, q):
+    Parent[tup] = tuple
+    q.put(tup)
+    Visited.append(tup[:2])
 
 
-def Rules(tuple,GOAL_SET):
-    q=Queue()
+def Rules(tuple, GOAL_SET):
+
+    q = Queue()
     q.put(tuple)
+
     while not q.empty():
-        tup_=q.get()
-        print(tup_)
-        (jug1, jug2, type) = tup_
-        if tup_[:2] in GOAL_SET:
+
+        currtup = q.get()
+        (jug1, jug2, type) = currtup
+
+        if currtup[:2] in GOAL_SET:
+            global flag
+            flag = 1
+
             path = []
-            print()
-            print("BFS PATH:")
+            tup_ = currtup
+
             while tup_ in Parent and Parent[tup_] is not None:
                 path.append(tup_)
                 tup_ = Parent[tup_]
             path.append(START)
             path.reverse()
             print(*path, sep="\n")
-            sys.exit()
-        if jug1 < 4:
-            tup = (4, jug2, "Filled 4g")
-            if tup[:2] not in Visited:
-                q.put(tup)
-                Visited.append(tup[:2])
-                BFSPath(tup_,tup)
-        if jug2 < 3:
-            tup = (jug1, 3, "Filled 3g")
-            if tup[:2] not in Visited:
-                q.put(tup)
-                Visited.append(tup[:2])
-                BFSPath(tup_,tup)
-        if jug1 > 0:
-            tup = (0, jug2, "Emptied 4g")
-            if tup[:2] not in Visited:
-                q.put(tup)
-                Visited.append(tup[:2])
-                BFSPath(tup_,tup)
-        if jug2 > 0:
-            tup = (jug1, 0, "Emptied 3g")
-            if tup[:2] not in Visited:
-                q.put(tup)
-                Visited.append(tup[:2])
-                BFSPath(tup_,tup)
-        if jug1 + jug2 < 7 and 4 - jug1 < jug2:
-            tup = (4, jug2 - (4 - jug1), "Transferred 3g to 4g with some remaining")
-            if tup[:2] not in Visited:
-                q.put(tup)
-                Visited.append(tup[:2])
-                BFSPath(tup_,tup)
-        if jug1 + jug2 < 7 and 3 - jug2 < jug1:
-            tup = (jug1 - (3 - jug2), 3, "Transferred 4g to 3g with some remaining")
-            if tup[:2] not in Visited:
-                q.put(tup)
-                Visited.append(tup[:2])
-                BFSPath(tup_,tup)
-        if jug1 + jug2 < 4:
-            tup = (jug1 + jug2, 0, "Entirely transferred 3g to 4g")
-            if tup[:2] not in Visited:
-                q.put(tup)
-                Visited.append(tup[:2])
-                BFSPath(tup_,tup)
-        if jug1 + jug2 < 3:
-            tup = (0, jug1 + jug2, "Entirely transferred 4g to 3g")
-            if tup[:2] not in Visited:
-                q.put(tup)
-                Visited.append(tup[:2])
-                BFSPath(tup_,tup)
+            print()
 
-jug=int(input("Enter 0 for 4g jug, 1 for 3g jug"))
-cap=int(input("Enter the capacity for the goal state"))
-GOAL_SET=[]
-if not jug:
-    for i in range(4):
-        GOAL_SET.append((cap,i))
-else:
-    for i in range(5):
-        GOAL_SET.append((i,cap))
-Rules(START,GOAL_SET)
+        else:
+            
+            if jug1 < m:
+                tup = (m, jug2, "Filled jug1")
+                
+                if tup[:2] not in Visited:
+                    BFSPath(currtup, tup, q)
+            
+            if jug2 < n:
+                tup = (jug1, n, "Filled jug2")
+                if tup[:2] not in Visited:
+                    BFSPath(currtup, tup, q)
+            
+            if jug1 > 0:
+                tup = (0, jug2, "Emptied jug1")
+                if tup[:2] not in Visited:
+                    BFSPath(currtup, tup, q)
+           
+            if jug2 > 0:
+                tup = (jug1, 0, "Emptied jug2")
+                if tup[:2] not in Visited:
+                    BFSPath(currtup, tup, q)
+            
+            if jug1 + jug2 < (m + n) and m - jug1 < jug2:
+                tup = (
+                    m,
+                    jug2 - (m - jug1),
+                    "Transferred jug2 to jug1 with some remaining",
+                )
+                if tup[:2] not in Visited:
+                    BFSPath(currtup, tup, q)
+            
+            if jug1 + jug2 < (m + n) and n - jug2 < jug1:
+                tup = (
+                    jug1 - (n - jug2),
+                    n,
+                    "Transferred jug1 to jug2 with some remaining",
+                )
+                if tup[:2] not in Visited:
+                    BFSPath(currtup, tup, q)
+            
+            if jug1 + jug2 < m:
+                tup = (jug1 + jug2, 0, "Entirely transferred jug2 to jug1")
+                if tup[:2] not in Visited:
+                    BFSPath(currtup, tup, q)
+            
+            if jug1 + jug2 < n:
+                tup = (0, jug1 + jug2, "Entirely transferred jug1 to jug2")
+                if tup[:2] not in Visited:
+                    BFSPath(currtup, tup, q)
+
+
+m = int(input("Enter cap of jug1:"))
+n = int(input("Enter cap of jug2:"))
+g = int(input("Enter goal:"))
+flag = 0
+GOAL_SET = []
+
+for i in range(n + 1):
+    GOAL_SET.append((g, i))
+for i in range(m + 1):
+    GOAL_SET.append((i, g))
+Rules(START, GOAL_SET)
+if not flag:
+    print("ALAS! No Solution!")
