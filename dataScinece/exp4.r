@@ -110,3 +110,8 @@ barplot(as.double(products$Price), main = "Price of products", xlab = "price", h
 hist(as.double((products$Stock), main = "Product stock", xlab = "Stock", xlim = c(0, 100), col = "green"))
 
 boxplot(as.double(products$Price), horizontal = TRUE, main = "Price", xlab = "Rupees", ylab = "Price", col = "orange", border = "brown")
+
+
+products$Price = as.double(products$Price)
+products$Stock = as.double(products$Stock)
+boxplot(products[, 3:4], main = "box plots for products")
