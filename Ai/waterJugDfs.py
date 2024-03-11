@@ -42,7 +42,8 @@ def jugsDfs(currentState, state):
     if (jug1, jug2) in goalSet:
         print(*path, sep="\n")
         print("reached goal state! \n")
-        solution = 1
+        global solution
+        solution += 1
         return
 
     if jug1 > 0:
@@ -64,7 +65,8 @@ def jugsDfs(currentState, state):
 
         else:
             jugsDfs(
-                (jug1 - (jug2Cap - jug2), jug2Cap, "Pouring from X to Y"), state + 1
+                (jug1 - (jug2Cap - jug2), jug2Cap,
+                 "Pouring from X to Y"), state + 1
             )
 
     if jug1 < jug1Cap and jug2 > 0:
@@ -74,7 +76,8 @@ def jugsDfs(currentState, state):
 
         else:
             jugsDfs(
-                (jug1Cap, jug2 - (jug1Cap - jug1), "Pouring from Y to X"), state + 1
+                (jug1Cap, jug2 - (jug1Cap - jug1),
+                 "Pouring from Y to X"), state + 1
             )
 
     path.pop(-1)
@@ -82,5 +85,5 @@ def jugsDfs(currentState, state):
 
 jugsDfs((0, 0, "Start"), state)
 
-if not solution:
+if solution == 0:
     print("No solution\n")
