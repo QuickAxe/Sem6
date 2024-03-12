@@ -42,7 +42,7 @@ rightJugCapacity = int(input('Enter the capacity of the right jug: '))
 jugBfs((0, 0), targetCapacity, leftJugCapacity, rightJugCapacity)
 
 if len(allPaths) == 0:
-    print('No viable solutions.')
+    print('No solution')
 else:
     for path in allPaths:
         print(path)
