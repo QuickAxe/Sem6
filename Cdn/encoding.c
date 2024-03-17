@@ -24,7 +24,9 @@ int main()
     //-------------------------------------- printing encoded outputs -------------------------------------------------
 
     // NRZ -------------------------
-    
+
+    printf("NRZ\n");
+
     printf(" 5v_");
     for(int i=0; i< length; i++)
     {
@@ -51,7 +53,9 @@ int main()
     printf("\n\n");
 
     //Manchester -------------------
-    
+
+    printf("Manchester\n");
+
     printf(" 5v_");
     for(int i=0; i< length; i++)
     {
@@ -81,6 +85,7 @@ int main()
 
     int flag=1;
 
+    printf("Diff Machester\n");
     printf(" 5v_");
     for(int i=0; i< length; i++)
     {
