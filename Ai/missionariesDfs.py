@@ -41,7 +41,7 @@ def missionariesCannibalsDfs(currentState):
 
     # check if goal state reached
     if currentState == (0, 0, "R"):
-        print(*path, sep="\n")
+        print(*path, sep=", ")
         print("reached goal state! \n")
         global solution
         solution += 1
@@ -56,16 +56,20 @@ def missionariesCannibalsDfs(currentState):
             )
 
         if currentMissonaries > 0:
-            missionariesCannibalsDfs((currentMissonaries - 1, currentCannibals, "R"))
+            missionariesCannibalsDfs(
+                (currentMissonaries - 1, currentCannibals, "R"))
 
         if currentCannibals > 0:
-            missionariesCannibalsDfs((currentMissonaries, currentCannibals - 1, "R"))
+            missionariesCannibalsDfs(
+                (currentMissonaries, currentCannibals - 1, "R"))
 
         if currentCannibals > cannibals - 2:
-            missionariesCannibalsDfs((currentMissonaries, currentCannibals - 2, "R"))
+            missionariesCannibalsDfs(
+                (currentMissonaries, currentCannibals - 2, "R"))
 
         if currentMissonaries > missionaries - 2:
-            missionariesCannibalsDfs((currentMissonaries - 2, currentCannibals, "R"))
+            missionariesCannibalsDfs(
+                (currentMissonaries - 2, currentCannibals, "R"))
 
     elif boat == "R":
         if currentMissonaries < missionaries and currentCannibals < cannibals:
@@ -74,16 +78,20 @@ def missionariesCannibalsDfs(currentState):
             )
 
         if currentMissonaries < missionaries:
-            missionariesCannibalsDfs((currentMissonaries + 1, currentCannibals, "L"))
+            missionariesCannibalsDfs(
+                (currentMissonaries + 1, currentCannibals, "L"))
 
         if currentCannibals < cannibals:
-            missionariesCannibalsDfs((currentMissonaries, currentCannibals + 1, "L"))
+            missionariesCannibalsDfs(
+                (currentMissonaries, currentCannibals + 1, "L"))
 
         if currentCannibals < cannibals - 1:
-            missionariesCannibalsDfs((currentMissonaries, currentCannibals + 2, "L"))
+            missionariesCannibalsDfs(
+                (currentMissonaries, currentCannibals + 2, "L"))
 
         if currentMissonaries < missionaries - 1:
-            missionariesCannibalsDfs((currentMissonaries + 2, currentCannibals, "L"))
+            missionariesCannibalsDfs(
+                (currentMissonaries + 2, currentCannibals, "L"))
 
     path.pop(-1)
 
@@ -92,5 +100,3 @@ missionariesCannibalsDfs((missionaries, cannibals, "L"))
 
 if solution == 0:
     print("No solution\n")
-
-print(visited)

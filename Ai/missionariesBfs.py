@@ -1,6 +1,7 @@
 #  state -> (missionaries, cannibals, boat) on right bank
 #  goal -> (0, 0, R)
 
+import sys
 print("Enter number of missionaries :")
 
 missionaries = int(input())
@@ -10,14 +11,32 @@ cannibals = int(input("Enter no of cannibals: "))
 parent = {}
 visited = []
 
+# list to store all penultimate goal states:
+preGoalStates = []
+
 solution = 0
 
 start = (missionaries, cannibals, "L")
+goal = (0, 0, "R")
 parent[start] = None
 
 queue = []
 
 queue.append(start)
+
+
+def addState(nextState, parentState):
+    global queue
+
+    if nextState == goal:
+        global preGoalStates
+        preGoalStates.append(parentState)
+        parent[nextState] = preGoalStates
+    elif nextState not in visited:
+        visited.append(parentState)
+        parent[nextState] = currentState
+    queue.append(nextState)
+
 
 while len(queue) != 0:
     currentState = queue.pop(0)
@@ -31,87 +50,61 @@ while len(queue) != 0:
         continue
 
     # check if goal state reached
-    if currentState == (0, 0, "R"):
-        path = []
+    if currentState == goal:
 
-        solution += 1
-        tempState = currentState
+        # get the list of parents of the goal state
+        parents = parent[currentState]
 
-        while tempState in parent and parent[tempState] is not None:
-            path.append(tempState)
-            tempState = parent[tempState]
+        for par in parents:
 
-        path.append(start)
-        path.reverse()
-        print(*path, sep="\n")
-        print("reached goal state! \n")
+            path = []
+            path.append(currentState)
+            solution += 1
+            tempState = par
+            while tempState in parent and parent[tempState] is not None:
+                path.append(tempState)
+                tempState = parent[tempState]
+
+            path.append(start)
+            path.reverse()
+            print(*path, sep=", ")
+            print("reached goal state! \n")
+        sys.exit()
 
     else:
-
-        visited.append((currentMissonaries, currentCannibals, boat))
 
         # check for each rule, and add to queue accordingly
         if boat == "L":
             if currentMissonaries > 0 and currentCannibals > 0:
                 nextState = (currentMissonaries - 1, currentCannibals - 1, "R")
-                if nextState not in visited:
-                    queue.append(nextState)
-                    parent[nextState] = currentState
-
+                addState(nextState, currentState)
             if currentMissonaries > 0:
                 nextState = (currentMissonaries - 1, currentCannibals, "R")
-                if nextState not in visited:
-                    queue.append(nextState)
-                    parent[nextState] = currentState
-
+                addState(nextState, currentState)
             if currentCannibals > 0:
                 nextState = (currentMissonaries, currentCannibals - 1, "R")
-                if nextState not in visited:
-                    queue.append(nextState)
-                    parent[nextState] = currentState
-
+                addState(nextState, currentState)
             if currentCannibals > cannibals - 2:
                 nextState = (currentMissonaries, currentCannibals - 2, "R")
-                if nextState not in visited:
-                    queue.append(nextState)
-                    parent[nextState] = currentState
-
+                addState(nextState, currentState)
             if currentMissonaries > missionaries - 2:
                 nextState = (currentMissonaries - 2, currentCannibals, "R")
-                if nextState not in visited:
-                    queue.append(nextState)
-                    parent[nextState] = currentState
-
+                addState(nextState, currentState)
         elif boat == "R":
             if currentMissonaries < missionaries and currentCannibals < cannibals:
                 nextState = (currentMissonaries + 1, currentCannibals + 1, "L")
-                if nextState not in visited:
-                    queue.append(nextState)
-                    parent[nextState] = currentState
-
+                addState(nextState, currentState)
             if currentMissonaries < missionaries:
                 nextState = (currentMissonaries + 1, currentCannibals, "L")
-                if nextState not in visited:
-                    queue.append(nextState)
-                    parent[nextState] = currentState
-
+                addState(nextState, currentState)
             if currentCannibals < cannibals:
                 nextState = (currentMissonaries, currentCannibals + 1, "L")
-                if nextState not in visited:
-                    queue.append(nextState)
-                    parent[nextState] = currentState
-
+                addState(nextState, currentState)
             if currentCannibals < cannibals - 1:
                 nextState = (currentMissonaries, currentCannibals + 2, "L")
-                if nextState not in visited:
-                    queue.append(nextState)
-                    parent[nextState] = currentState
-
+                addState(nextState, currentState)
             if currentMissonaries < missionaries - 1:
                 nextState = (currentMissonaries + 2, currentCannibals, "L")
-                if nextState not in visited:
-                    queue.append(nextState)
-                    parent[nextState] = currentState
-
+                addState(nextState, currentState)
 if solution == 0:
     print("No solution, :(")

@@ -35,32 +35,32 @@ def Rules(tuple, GOAL_SET):
                 tup_ = Parent[tup_]
             path.append(START)
             path.reverse()
-            print(*path, sep="\n")
+            print(*path, sep=", ")
             print()
 
         else:
-            
+
             if jug1 < m:
                 tup = (m, jug2, "Filled jug1")
-                
+
                 if tup[:2] not in Visited:
                     BFSPath(currtup, tup, q)
-            
+
             if jug2 < n:
                 tup = (jug1, n, "Filled jug2")
                 if tup[:2] not in Visited:
                     BFSPath(currtup, tup, q)
-            
+
             if jug1 > 0:
                 tup = (0, jug2, "Emptied jug1")
                 if tup[:2] not in Visited:
                     BFSPath(currtup, tup, q)
-           
+
             if jug2 > 0:
                 tup = (jug1, 0, "Emptied jug2")
                 if tup[:2] not in Visited:
                     BFSPath(currtup, tup, q)
-            
+
             if jug1 + jug2 < (m + n) and m - jug1 < jug2:
                 tup = (
                     m,
@@ -69,7 +69,7 @@ def Rules(tuple, GOAL_SET):
                 )
                 if tup[:2] not in Visited:
                     BFSPath(currtup, tup, q)
-            
+
             if jug1 + jug2 < (m + n) and n - jug2 < jug1:
                 tup = (
                     jug1 - (n - jug2),
@@ -78,12 +78,12 @@ def Rules(tuple, GOAL_SET):
                 )
                 if tup[:2] not in Visited:
                     BFSPath(currtup, tup, q)
-            
+
             if jug1 + jug2 < m:
                 tup = (jug1 + jug2, 0, "Entirely transferred jug2 to jug1")
                 if tup[:2] not in Visited:
                     BFSPath(currtup, tup, q)
-            
+
             if jug1 + jug2 < n:
                 tup = (0, jug1 + jug2, "Entirely transferred jug1 to jug2")
                 if tup[:2] not in Visited:
