@@ -17,14 +17,22 @@ def missionariesCannibalsDfs(currentState):
 
     currentMissonaries, currentCannibals, boat = currentState
 
-    # check if state is legal
-    if (currentMissonaries < currentCannibals) or (
-        (missionaries - currentMissonaries) < (cannibals - currentCannibals)
+    # check if state is illegal
+    # if (
+    #     (currentMissonaries < currentCannibals)
+    #     or ((missionaries - currentMissonaries) < (cannibals - currentCannibals))
+    # ) and (currentMissonaries != 0 or currentMissonaries != missionaries):
+    #     return
+
+    if not (
+        (currentMissonaries == currentCannibals)
+        or (currentMissonaries in [0, missionaries])
     ):
         return
 
     global visited
 
+    # check if current state has been visited previously
     if (currentMissonaries, currentCannibals, boat) in visited:
         return
 
