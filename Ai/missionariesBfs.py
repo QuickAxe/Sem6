@@ -2,6 +2,7 @@
 #  goal -> (0, 0, R)
 
 import sys
+
 print("Enter number of missionaries :")
 
 missionaries = int(input())
@@ -12,7 +13,7 @@ parent = {}
 visited = []
 
 # list to store all penultimate goal states:
-preGoalStates = []
+preGoalStates = set()
 
 solution = 0
 
@@ -30,7 +31,7 @@ def addState(nextState, parentState):
 
     if nextState == goal:
         global preGoalStates
-        preGoalStates.append(parentState)
+        preGoalStates.add(parentState)
         parent[nextState] = preGoalStates
     elif nextState not in visited:
         visited.append(parentState)
@@ -69,6 +70,7 @@ while len(queue) != 0:
             path.reverse()
             print(*path, sep=", ")
             print("reached goal state! \n")
+        print(parents)
         sys.exit()
 
     else:
