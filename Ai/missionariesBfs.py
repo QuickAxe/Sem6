@@ -70,7 +70,7 @@ while len(queue) != 0:
             path.reverse()
             print(*path, sep=", ")
             print("reached goal state! \n")
-        print(parents)
+
         sys.exit()
 
     else:

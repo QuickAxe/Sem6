@@ -4,11 +4,11 @@ from copy import deepcopy
 
 # store the starting puzzle state
 # puzzle = [[7, 2, 4], [5, 0, 6], [8, 3, 1]]
-puzzle = [[1, 2, 3], [4, 5, 0], [7, 8, 6]]
+puzzle = [[2, 8, 3], [1, 0, 4], [7, 6, 5]]
 
 
 # assuming a 0 is the blank space
-goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+goal = [[1, 2, 3], [8, 0, 4], [7, 6, 5]]
 # goal = [[1, 2, 3], [5, 8, 6], [0, 7, 4]]
 
 
@@ -19,7 +19,8 @@ def heuristic(currentState):
             goalI, goalJ = findIndex(goal, currentState[i][j])
 
             # find manhattan distance:
-            heuristicValue += abs(goalI - i) + abs(goalJ - j)
+            if currentState[i][j] != 0:
+                heuristicValue += abs(goalI - i) + abs(goalJ - j)
 
     return heuristicValue
 
@@ -86,6 +87,8 @@ def hillClimb8Puzzle(currentState):
     # find if best child has heuristic value greather than parent, only then visit it
     parentHeuristic = heuristic(currentState)
 
+    print("min heuristic: ")
+    print(largest)
     if largest < parentHeuristic:
         hillClimb8Puzzle(children[largestIndex])
     else:
