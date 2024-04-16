@@ -57,7 +57,7 @@ while len(open) != 0:
     minNode = min(open, key=lambda tup: tup[2])
     minNodeIndex = open.index(minNode)
     node, parent, parentFvalue = open.pop(minNodeIndex)
-    
+
     # add to closed now
     closed.append((node, parent))
 
@@ -83,4 +83,3 @@ while len(open) != 0:
         open.append((child, node, childFvalue))
 
 path = []
-
