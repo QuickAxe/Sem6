@@ -1,18 +1,14 @@
 lung <- read.csv("./dataScinece/LungCapData.txt", sep = "\t")
-# lung
+
 dim(lung)
 str(lung)
 
-# lung[1:2]
 
 head(lung)
 tail(lung)
 
-# View(lung)
-
-
 lung1 <- read.table("./dataScinece/LungCapData.txt", sep = "\t", header = TRUE)
-# lung1
+
 
 write.table(lung, "lungCapData1.csv", sep = ",")
 
