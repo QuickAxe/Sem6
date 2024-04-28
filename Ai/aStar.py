@@ -1,4 +1,5 @@
 # find the shortest path using the A* algorithm
+# find a path from S to G in this example graph:
 
 heuristic = {
     "S": 14,
@@ -11,6 +12,7 @@ heuristic = {
     "H": 8,
     "B": 10,
     "C": 8,
+    "M": 7,
     "K": 6,
     "N": 4,
     "P": 5,
@@ -47,6 +49,7 @@ graph = {
 
 open = []
 closed = []
+parent = {}
 
 # store tuples in the format (node, parent, (g+h value))
 open.append(("S", None, heuristic["S"]))
@@ -56,10 +59,11 @@ while len(open) != 0:
     # Find the min node in the open list
     minNode = min(open, key=lambda tup: tup[2])
     minNodeIndex = open.index(minNode)
-    node, parent, parentFvalue = open.pop(minNodeIndex)
+    node, parentNode, parentFvalue = open.pop(minNodeIndex)
 
     # add to closed now
-    closed.append((node, parent))
+    closed.append((node, parentNode))
+    parent[node] = parentNode
 
     # find the children of the node, and add to open
     for children in graph[node]:
@@ -83,3 +87,14 @@ while len(open) != 0:
         open.append((child, node, childFvalue))
 
 path = []
+
+path.append("G")
+
+# compute path now here:
+tempNode = "G"
+while tempNode != "S":
+    path.append(parent[tempNode])
+    tempNode = parent[tempNode]
+
+path.reverse()
+print(path)
