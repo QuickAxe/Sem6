@@ -7,10 +7,13 @@ from copy import copy
 n = int(input("Enter the value of n: "))
 
 # store the state as a list of the positions of the queens, per row
-state = [random.randint(0, n) for i in range(n)]
+state = [random.randint(0, n-1) for i in range(n)]
 
 # store all the visited states:
 visited = []
+
+# flag if there is no solution
+noGoalFlag = True
 
 # # store some valid state
 # state = [[1 if i==j else 0 for i in range(n)] for j in range(n)]
@@ -68,7 +71,7 @@ def heuristic(state):
     heuristicValue = 0
 
     for key_i, loc in enumerate(locations):
-        for loc2 in locations[key_i:]:
+        for loc2 in locations[key_i + 1:]:
             # loc loc2 are two tuples
             # (i, j)
             #   (0,0)
@@ -109,6 +112,8 @@ def genChildren(state):
                 child[i] = j
                 if child not in visited:
                     children.append(copy(child))
+                    # add it to visited
+                    visited.append(copy(child))
 
     return children
 
@@ -145,19 +150,24 @@ def bestFirstNQueens(start):
         if currentHeuristic == 0:
             print("goal reached")
             printBoard(currentState)
+            global noGoalFlag
+            noGoalFlag = False
             return
         # add it to visited
-        visited.append(currentState)
+        visited.append(copy(currentState))
 
         # generate all children of the current state, that have not already been visited:
         children = genChildren(currentState)
 
         # compute the heuristic of each child, and add it to the queue:
         for child in children:
-            queue.append((heuristic(child), child))
+            queue.append((heuristic(child), copy(child)))
 
         # sort the queue based on heuristic values:
         queue.sort()
 
 
 bestFirstNQueens(state)
+
+if noGoalFlag:
+    print("No solution :(")
