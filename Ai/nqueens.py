@@ -146,6 +146,9 @@ def bestFirstNQueens(start):
         # get the best child from the queue
         currentHeuristic, currentState = queue.pop(0)
 
+        print()
+        printBoard(currentState)
+
         # check if a goal state has been reached
         if currentHeuristic == 0:
             print("goal reached")
