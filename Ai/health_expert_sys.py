@@ -1,4 +1,4 @@
-# Code written by 
+# Code written by https://github.com/SorcierMaheP
 
 Knowledge_base = {
     "COVID": [
