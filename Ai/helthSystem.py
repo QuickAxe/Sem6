@@ -76,7 +76,8 @@ def health_diagnostic():
                     potential_diseases.append("COVID-19")
                 else:
                     print("Do you have difficulty swallowing or loss of appetite?")
-                    swallowing_difficulty = input("Enter 'yes' or 'no': ").lower()
+                    swallowing_difficulty = input(
+                        "Enter 'yes' or 'no': ").lower()
                     if swallowing_difficulty == "yes":
                         potential_diseases.append("Strep Throat")
                     else:
