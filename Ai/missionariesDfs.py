@@ -24,6 +24,7 @@ def missionariesCannibalsDfs(currentState):
     # ) and (currentMissonaries != 0 or currentMissonaries != missionaries):
     #     return
 
+    # credits to this elegant condition of a valid state go to : https://github.com/SorcierMaheP
     if not (
         (currentMissonaries == currentCannibals)
         or (currentMissonaries in [0, missionaries])
@@ -56,16 +57,20 @@ def missionariesCannibalsDfs(currentState):
             )
 
         if currentMissonaries > 0:
-            missionariesCannibalsDfs((currentMissonaries - 1, currentCannibals, "R"))
+            missionariesCannibalsDfs(
+                (currentMissonaries - 1, currentCannibals, "R"))
 
         if currentCannibals > 0:
-            missionariesCannibalsDfs((currentMissonaries, currentCannibals - 1, "R"))
+            missionariesCannibalsDfs(
+                (currentMissonaries, currentCannibals - 1, "R"))
 
         if currentCannibals > cannibals - 2:
-            missionariesCannibalsDfs((currentMissonaries, currentCannibals - 2, "R"))
+            missionariesCannibalsDfs(
+                (currentMissonaries, currentCannibals - 2, "R"))
 
         if currentMissonaries > missionaries - 2:
-            missionariesCannibalsDfs((currentMissonaries - 2, currentCannibals, "R"))
+            missionariesCannibalsDfs(
+                (currentMissonaries - 2, currentCannibals, "R"))
 
     elif boat == "R":
         if currentMissonaries < missionaries and currentCannibals < cannibals:
@@ -74,16 +79,20 @@ def missionariesCannibalsDfs(currentState):
             )
 
         if currentMissonaries < missionaries:
-            missionariesCannibalsDfs((currentMissonaries + 1, currentCannibals, "L"))
+            missionariesCannibalsDfs(
+                (currentMissonaries + 1, currentCannibals, "L"))
 
         if currentCannibals < cannibals:
-            missionariesCannibalsDfs((currentMissonaries, currentCannibals + 1, "L"))
+            missionariesCannibalsDfs(
+                (currentMissonaries, currentCannibals + 1, "L"))
 
         if currentCannibals < cannibals - 1:
-            missionariesCannibalsDfs((currentMissonaries, currentCannibals + 2, "L"))
+            missionariesCannibalsDfs(
+                (currentMissonaries, currentCannibals + 2, "L"))
 
         if currentMissonaries < missionaries - 1:
-            missionariesCannibalsDfs((currentMissonaries + 2, currentCannibals, "L"))
+            missionariesCannibalsDfs(
+                (currentMissonaries + 2, currentCannibals, "L"))
 
     path.pop(-1)
 
