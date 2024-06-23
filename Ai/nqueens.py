@@ -64,6 +64,7 @@ noGoalFlag = True
 # ================================================ Utility Functions ====================================
 
 
+# this function was partially contributed by : https://github.com/TheInvincible95
 def heuristic(state):
 
     # store the (x, y) coordinates of the queens
