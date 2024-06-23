@@ -44,7 +44,7 @@ while len(queue) != 0:
 
     currentMissonaries, currentCannibals, boat = currentState
 
-    # credits to this elegant condition of a valid state go to : https://github.com/SorcierMaheP
+    # credits to this elegant condition for a valid state go to : https://github.com/SorcierMaheP
     if not (
         (currentMissonaries == currentCannibals)
         or (currentMissonaries in [0, missionaries])
